@@ -2,9 +2,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const step1 = document.getElementById('step1');
     const stepNo = document.getElementById('stepNo');
     const stepBday = document.getElementById('stepBday');
-    const step2 = document.getElementById('step2');
+    const stepHug = document.getElementById('stepHug');
     const step3 = document.getElementById('step3');
     const step4 = document.getElementById('step4');
+    const stepFrame = document.getElementById('stepFrame');
     const choiceRow = document.getElementById('choiceRow');
     const yesButton = document.getElementById('yes-button');
     const noButton = document.getElementById('no-button');
@@ -12,10 +13,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const noPageTitle = document.querySelector('.no-page-title');
     const tryAgainButton = document.getElementById('try-again-button');
     const continueBdayButton = document.getElementById('continue-bday-button');
+    const hugContinueButton = document.getElementById('hug-continue-button');
     const nextWishButton = document.getElementById('next-wish-button');
     const finalCloseButton = document.getElementById('final-close-button');
-    const letterContainer = document.getElementById('letterContainer');
-    const unfoldButton = document.getElementById('unfold-button');
+    const frameCloseButton = document.getElementById('frame-close-button');
     const greetingTextElement = document.getElementById('greetingText');
 
     function animateHeadingText(element, baseDelay = 0) {
@@ -48,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     animateHeadingText(introTitle, 0.08);
 
-    // --- Step 1 to Step 2 Transition ---
+    // --- Step 1 Navigation ---
     function moveButtonRandomly(button) {
         const rowRect = choiceRow.getBoundingClientRect();
         const btnRect = button.getBoundingClientRect();
@@ -91,13 +92,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     continueBdayButton.addEventListener('click', () => {
         stepBday.classList.remove('active');
-        step2.classList.add('active');
-        setTimeout(() => letterContainer.classList.add('show'), 100);
+        stepHug.classList.add('active');
     });
 
-    // --- Step 2 to Step 3 Transition ---
-    unfoldButton.addEventListener('click', () => {
-        step2.classList.remove('active');
+    hugContinueButton.addEventListener('click', () => {
+        stepHug.classList.remove('active');
         step3.classList.add('active');
         startFinalAnimations();
     });
@@ -109,6 +108,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     finalCloseButton.addEventListener('click', () => {
         step4.classList.remove('active');
+        stepFrame.classList.add('active');
+    });
+
+    frameCloseButton.addEventListener('click', () => {
+        stepFrame.classList.remove('active');
         step1.classList.add('active');
         resetIntroButtons();
         animateHeadingText(introTitle, 0.08);
@@ -129,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 i++;
             } else {
                 clearInterval(typing);
-                cursor.style.animation = 'none'; // Optional: stop blinking
+                cursor.style.animation = 'none';
                 cursor.style.display = 'none';
             }
         }, 100);
@@ -144,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const balloon = document.createElement('div');
             balloon.className = 'balloon';
             balloon.style.left = `${Math.random() * 100}vw`;
-            balloon.style.animationDuration = `${Math.random() * 6 + 8}s`; // 8-14s duration
+            balloon.style.animationDuration = `${Math.random() * 6 + 8}s`;
             balloon.style.animationDelay = `${Math.random() * 5}s`;
             balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
             document.body.appendChild(balloon);
