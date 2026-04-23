@@ -62,8 +62,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    document.addEventListener('pointerdown', tryStartMusic, { once: true });
-    document.addEventListener('keydown', tryStartMusic, { once: true });
+    // Keep trying on user gestures until music starts (mobile browsers can reject the first attempt).
+    document.addEventListener('pointerdown', tryStartMusic, { passive: true });
+    document.addEventListener('touchend', tryStartMusic, { passive: true });
+    document.addEventListener('click', tryStartMusic);
+    document.addEventListener('keydown', tryStartMusic);
 
     function animateHeadingText(element, baseDelay = 0) {
         if (!element) {
