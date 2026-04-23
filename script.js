@@ -21,8 +21,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const loveCloseButton = document.getElementById('love-close-button');
     const greetingTextElement = document.getElementById('greetingText');
     const bgMusic = document.getElementById('bg-music');
-    const musicPermissionNote = document.getElementById('music-permission-note');
+    const musicPopup = document.getElementById('music-popup');
     let musicStarted = false;
+    let popupTimer;
+
+    function showMusicPopup(message) {
+        if (!musicPopup) {
+            return;
+        }
+
+        musicPopup.textContent = message;
+        musicPopup.classList.add('visible');
+
+        if (popupTimer) {
+            clearTimeout(popupTimer);
+        }
+
+        popupTimer = setTimeout(() => {
+            musicPopup.classList.remove('visible');
+        }, 20000);
+    }
 
     function tryStartMusic() {
         if (!bgMusic || musicStarted) {
@@ -36,14 +54,10 @@ document.addEventListener('DOMContentLoaded', () => {
             playAttempt
                 .then(() => {
                     musicStarted = true;
-                    if (musicPermissionNote) {
-                        musicPermissionNote.textContent = 'Now playing: pretty_lover.mp3';
-                    }
+                    showMusicPopup('Now playing: pretty_lover.mp3');
                 })
                 .catch(() => {
-                    if (musicPermissionNote) {
-                        musicPermissionNote.textContent = 'Please tap once to allow music: pretty_lover.mp3';
-                    }
+                    showMusicPopup('Please tap once to allow music: pretty_lover.mp3');
                 });
         }
     }
