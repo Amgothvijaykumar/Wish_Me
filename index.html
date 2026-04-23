@@ -9,13 +9,49 @@
 <body>
 
     <div class="step active" id="step1">
-        <div class="envelope-container" id="envelopeContainer">
-            <div class="envelope">
-                <div class="envelope-back"></div>
-                <div class="envelope-front"></div>
-                <div class="envelope-flap"></div>
-                <div class="envelope-seal"></div>
+        <div class="intro-card" id="introCard">
+            <h1 class="intro-title">I made something special for u<br>do u wanna see it?</h1>
+
+            <div class="intro-characters" aria-hidden="true">
+                <img src="photos/dudu1.gif" class="intro-gif intro-gif-left" alt="Dudu character animation">
+                <img src="photos/panda1.gif" class="intro-gif intro-gif-right" alt="Panda character animation">
+                <span class="floating-heart heart-a">&hearts;</span>
+                <span class="floating-heart heart-b">&hearts;</span>
+                <span class="floating-heart heart-c">&hearts;</span>
             </div>
+
+            <div class="choice-row" id="choiceRow">
+                <button id="yes-button" class="choice-btn yes-btn">YES</button>
+                <button id="no-button" class="choice-btn no-btn">NO</button>
+            </div>
+
+            <p class="intro-note">Tip: Click YES for birthday wishes!</p>
+        </div>
+    </div>
+
+    <div class="step" id="stepBday">
+        <div class="bday-card">
+            <h1 class="bday-title">HAPPY BIRTHDAY<br><span class="bday-name-deepu">DEEPU</span></h1>
+            
+            <div class="bday-container">
+                <img src="photos/bday.gif" class="bday-gif" alt="Birthday celebration animation">
+            </div>
+
+            <p class="bday-wish">Wishing you a day filled with love, laughter, and endless joy!</p>
+            
+            <button id="continue-bday-button" class="continue-btn">Continue</button>
+        </div>
+    </div>
+
+    <div class="step" id="stepNo">
+        <div class="no-page-card">
+            <h2 class="no-page-title">Why did u click no!?</h2>
+
+            <div class="no-page-characters" aria-hidden="true">
+                <img src="photos/panda_dudu1.gif" class="no-page-gif" alt="Panda and dudu reaction animation">
+            </div>
+
+            <button id="try-again-button" class="try-again-btn">TRY AGAIN</button>
         </div>
     </div>
 
@@ -46,6 +82,42 @@
                     <div class="flame"></div>
                 </div>
             </div>
+            <button id="next-wish-button" class="next-wish-btn">Next</button>
+        </div>
+    </div>
+
+    <div class="step" id="step4">
+        <div class="wish-message-card">
+            <h1 class="wish-title">MY WISH FOR U</h1>
+
+            <div class="wish-decoratives">
+                <span class="decor-item decor-camera">📷</span>
+                <span class="decor-item decor-hearts-top">💕</span>
+                <span class="decor-item decor-cherries">🍒</span>
+            </div>
+
+            <div class="wish-text-container">
+                <p class="wish-text">
+                    If I could love you for one more day, I would love you for one more day. If I could look at you more time, I could look at you one more time.
+                    <br><br>
+                    If you want me to be by your side for a lifetime then first you have to show me that I'll be loved for a lifetime.
+                    <br><br>
+                    I just want to thank you for always carrying all of my worries even though your own life hasn't been easy at all.
+                    <br><br>
+                    I only wish for you to be yourself, but as a better version of yourself.
+                    <br><br>
+                    And finally happy birthday to my love! I wish you lots of joy and happiness to gratitude on time, and I hope that someday I'll be able to celebrate your birthday together with you.
+                    <br><br>
+                    From you
+                </p>
+            </div>
+
+            <div class="wish-decoratives-bottom">
+                <span class="decor-item decor-hearts-bottom">💕</span>
+                <span class="decor-item decor-spiral">🌀</span>
+            </div>
+
+            <button id="final-close-button" class="final-btn">Close</button>
         </div>
     </div>
 

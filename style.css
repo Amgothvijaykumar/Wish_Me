@@ -2,11 +2,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;700&display=swap');
 
 :root {
-    --bg-color: #1a1a2e;
-    --primary-color: #e94560;
-    --secondary-color: #0f3460;
+    --bg-color: #ffe9ef;
+    --primary-color: #d73c63;
+    --secondary-color: #f7c2d1;
     --accent-color: #f0e68c;
-    --text-color: #ffffff;
+    --text-color: #2d1e2f;
     --envelope-color: #f0f0f0;
     --envelope-flap-color: #e0e0e0;
     --letter-color: #fffaf0;
@@ -20,7 +20,10 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(45deg, var(--bg-color), var(--secondary-color));
+    background:
+        radial-gradient(circle at 12% 15%, rgba(255, 255, 255, 0.85), transparent 30%),
+        radial-gradient(circle at 88% 88%, rgba(255, 188, 208, 0.45), transparent 28%),
+        linear-gradient(130deg, #ffeef4 0%, #ffd7e4 42%, #ffd0df 100%);
     color: var(--text-color);
     display: flex;
     justify-content: center;
@@ -46,66 +49,469 @@ body {
     display: flex;
 }
 
-/* ===== STEP 1: ENVELOPE ===== */
-.envelope-container {
-    cursor: pointer;
-    animation: pulse 2s infinite;
+/* ===== STEP 1: INTRO SCREEN ===== */
+.intro-card {
+    width: min(92vw, 700px);
+    min-height: 500px;
+    border-radius: 32px;
+    background: rgba(255, 255, 255, 0.58);
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    box-shadow: 0 30px 65px rgba(124, 45, 74, 0.22);
+    backdrop-filter: blur(5px);
+    text-align: center;
+    padding: 42px 28px 26px;
+    animation: cardEnter 0.9s cubic-bezier(.2, .7, .2, 1);
 }
 
-.envelope {
+.intro-title {
+    font-size: clamp(1.7rem, 4.8vw, 2.45rem);
+    line-height: 1.2;
+    letter-spacing: 0.4px;
+    color: #6a2340;
+    text-shadow: 0 2px 0 rgba(255, 255, 255, 0.65);
+    white-space: normal;
+}
+
+.intro-characters {
     position: relative;
-    width: 300px;
-    height: 200px;
+    height: 220px;
+    margin: 24px auto 20px;
+    width: min(90%, 470px);
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    gap: 38px;
 }
 
-.envelope-back {
+.intro-gif {
+    width: 170px;
+    max-width: 38vw;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 8px 12px rgba(108, 52, 74, 0.18));
+    animation: floatSoft 2.9s ease-in-out infinite;
+}
+
+.intro-gif-right {
+    animation-delay: 0.45s;
+}
+
+.character {
+    width: 145px;
+    position: relative;
+    animation: floatSoft 2.9s ease-in-out infinite;
+}
+
+.character-right {
+    animation-delay: 0.45s;
+}
+
+.character-head {
+    width: 110px;
+    height: 98px;
+    margin: 0 auto;
+    border-radius: 42% 42% 40% 40%;
+    border: 4px solid #583244;
+    position: relative;
+}
+
+.character-head::before,
+.character-head::after {
+    content: '';
     position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 4px solid #583244;
+    top: -14px;
+    background: inherit;
+}
+
+.character-head::before { left: 14px; }
+.character-head::after { right: 14px; }
+
+.character-body {
+    width: 120px;
+    height: 80px;
+    margin: -2px auto 0;
+    border-radius: 18px;
+    border: 4px solid #583244;
+}
+
+.character-left .character-head,
+.character-left .character-body {
+    background: #f8feff;
+}
+
+.character-right .character-head,
+.character-right .character-body {
+    background: #f8dfbf;
+}
+
+.floating-heart {
+    position: absolute;
+    color: #f06895;
+    font-size: 1.35rem;
+    opacity: 0.8;
+    animation: heartFloat 2.4s ease-in-out infinite;
+}
+
+.heart-a { left: 18%; top: 28%; animation-delay: 0.2s; }
+.heart-b { left: 50%; top: 20%; animation-delay: 0.6s; }
+.heart-c { right: 16%; top: 30%; animation-delay: 1s; }
+
+.choice-row {
+    width: min(100%, 350px);
+    height: 86px;
+    margin: 8px auto 2px;
+    position: relative;
+}
+
+.choice-btn {
+    width: 132px;
+    height: 56px;
+    border: 0;
+    border-radius: 999px;
+    font-size: 2rem;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+    color: #fff;
+    letter-spacing: 0.6px;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.yes-btn {
+    left: 0;
+    background: linear-gradient(180deg, #ef577a, #c92f52);
+    box-shadow: 0 11px 20px rgba(188, 33, 74, 0.32);
+}
+
+.no-btn {
+    left: 200px;
+    background: linear-gradient(180deg, #dd3d64, #a92845);
+    box-shadow: 0 11px 20px rgba(130, 28, 52, 0.28);
+}
+
+.choice-btn:hover {
+    transform: translateY(-3px) scale(1.03);
+}
+
+.intro-note {
+    margin-top: 18px;
+    color: #7e3e56;
+    font-size: 0.92rem;
+    letter-spacing: 0.2px;
+}
+
+/* ===== STEP BDAY: BIRTHDAY WISHES ===== */
+.bday-card {
+    width: min(90vw, 700px);
+    min-height: 550px;
+    border-radius: 32px;
+    background: rgba(255, 255, 255, 0.62);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    box-shadow: 0 28px 62px rgba(124, 45, 74, 0.24);
+    backdrop-filter: blur(6px);
+    text-align: center;
+    padding: 38px 26px 32px;
+    animation: cardEnter 0.75s cubic-bezier(.2, .7, .2, 1);
+}
+
+.bday-title {
+    font-size: clamp(2.2rem, 7.5vw, 3.5rem);
+    line-height: 1.1;
+    color: #7a1e3e;
+    font-weight: 900;
+    letter-spacing: 2px;
+    margin: 0 0 12px;
+    text-shadow: 0 4px 0 rgba(255, 255, 255, 0.75);
+    white-space: normal;
+    animation: titleSlideIn 0.75s ease-out;
+}
+
+.bday-name-deepu {
+    display: block;
+    font-size: clamp(2.5rem, 8.5vw, 3.8rem);
+    background: linear-gradient(135deg, #e94560, #d11f42);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-style: italic;
+    letter-spacing: 3px;
+    font-weight: 900;
+    text-shadow: none;
+    margin-top: 6px;
+    animation: bdayNamePop 0.8s 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.bday-container {
+    width: 280px;
+    height: 280px;
+    margin: 20px auto 16px;
+    position: relative;
+    display: grid;
+    place-items: center;
+}
+
+.bday-gif {
     width: 100%;
     height: 100%;
-    background-color: var(--envelope-color);
-    border-radius: 10px;
+    object-fit: contain;
+    object-position: center;
+    filter: drop-shadow(0 12px 18px rgba(98, 44, 64, 0.25));
+    animation: bdayBounce 2.2s ease-in-out infinite;
 }
 
-.envelope-flap {
-    position: absolute;
-    width: 100%;
-    height: 100px;
-    background-color: var(--envelope-flap-color);
-    top: 0;
-    left: 0;
-    clip-path: polygon(0 0, 100% 0, 50% 100%);
-    transform-origin: top;
-    transition: transform 0.5s ease-in-out;
+.bday-wish {
+    font-size: clamp(1rem, 4vw, 1.3rem);
+    color: #6a2340;
+    margin: 12px 0 24px;
+    line-height: 1.5;
+    font-weight: 500;
 }
 
-.envelope-front {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: var(--envelope-color);
-    top: 0;
-    left: 0;
-    clip-path: polygon(0 100%, 100% 100%, 100% 50%, 50% 100%, 0 50%);
+.continue-btn {
+    width: 180px;
+    height: 54px;
+    border: 0;
+    border-radius: 999px;
+    background: linear-gradient(180deg, #e94560, #d11f42);
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    box-shadow: 0 13px 22px rgba(170, 28, 64, 0.32);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.envelope-seal {
+.continue-btn:hover {
+    transform: translateY(-2px) scale(1.04);
+}
+
+@keyframes bdayBounce {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-12px) scale(1.05); }
+}
+
+@keyframes bdayNamePop {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.5) rotateZ(-10deg);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1) rotateZ(0deg);
+    }
+}
+
+/* ===== STEP NO: REACTION SCREEN ===== */
+.no-page-card {
+    width: min(90vw, 500px);
+    min-height: 500px;
+    border-radius: 32px;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 25px 58px rgba(124, 45, 74, 0.2);
+    backdrop-filter: blur(5px);
+    text-align: center;
+    padding: 36px 22px 30px;
+    animation: cardEnter 0.6s cubic-bezier(.2, .7, .2, 1);
+}
+
+.no-page-title {
+    font-size: clamp(2rem, 7vw, 3rem);
+    line-height: 1.1;
+    color: #7a1e3e;
+    transform: rotate(-5deg);
+    margin: 8px 0 6px;
+    text-shadow: 0 3px 0 rgba(255, 255, 255, 0.7);
+    white-space: normal;
+}
+
+.heading-char {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(14px) scale(0.95);
+    animation: charReveal 0.45s ease-out forwards;
+    animation-delay: var(--char-delay, 0s);
+}
+
+.no-page-characters {
+    margin: 18px auto 20px;
+    width: 220px;
+    height: 250px;
+    position: relative;
+    display: grid;
+    place-items: center;
+}
+
+.no-page-gif {
+    width: 210px;
+    height: 210px;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+    margin: 0 auto;
+    filter: drop-shadow(0 10px 14px rgba(98, 44, 64, 0.2));
+    animation: bounceSoft 3.1s ease-in-out infinite;
+}
+
+.stack-character {
     position: absolute;
-    width: 40px;
-    height: 40px;
-    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2U5NDU2MCI+PHBhdGggZD0iTTEyIDIuMWMyLjIgMCA0LjIgMS4xIDUuMyAyLjlsLjYuOWMtLjkgMS4yLTIuMSAyLTMuMyAyLTEuMyAwLTIuNS0uOC0zLjQtMi0uOSAxLjEtMi4xIDItMy40IDJzLTIuNC0uOS0zLjItMmwuNS0uN0M3LjggMy4yIDkuOCAyLjEgMTIgMi4xbTAgMWMtMi41IDAtNC43IDEuMi02IDNjLTEuMiAxLjctMS44IDMuNy0xLjggNS43IDAgMi4xLjYgNC4xIDEuOCA1LjcgMS4yIDEuOCA0LjYgMyA2IDNzNC43LTEuMiA2LTNjMS4yLTEuNyAxLjgtMy43IDEuOC01LjcgMC0yLjEtLjYtNC4xLTEuOC01LjctMS4zLTEuOC0zLjUtMy02LTNtMCAxN2MtMy4zIDAtNS41LTEuNy02LjUtMy4yLTEtMS41LTEuNS0zLjQtMS41LTUuMiAwLTEuOS41LTMuOCAxLjUtNS4yIDEuMS0xLjYgMy4yLTMuMiA2LjUtMy4yIDMuMyAwIDUuNSAxLjcgNi41IDMuMiAxIDEuNSAxLjUgMy40IDEuNSA1LjIgMCAxLjktLjUgMy44LTEuNSA1LjItMS4xIDEuNS0zLjIgMy4yLTYuNSAzLjIiLz48L3N2Zz4=');
-    background-size: cover;
-    top: 80px;
     left: 50%;
     transform: translateX(-50%);
 }
 
-.envelope-container.open .envelope-flap {
-    transform: rotateX(180deg);
+.stack-head {
+    width: 120px;
+    height: 102px;
+    margin: 0 auto;
+    border: 4px solid #4d2a3a;
+    border-radius: 42% 42% 40% 40%;
+    position: relative;
+}
+
+.stack-head::before,
+.stack-head::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 4px solid #4d2a3a;
+    top: -14px;
+    background: inherit;
+}
+
+.stack-head::before { left: 14px; }
+.stack-head::after { right: 14px; }
+
+.stack-body {
+    width: 132px;
+    height: 82px;
+    margin: -2px auto 0;
+    border: 4px solid #4d2a3a;
+    border-radius: 20px;
+}
+
+.top-bear {
+    top: 28px;
+    animation: wiggleTiny 2.6s ease-in-out infinite;
+    z-index: 2;
+}
+
+.top-bear .stack-head,
+.top-bear .stack-body {
+    background: #eefeff;
+}
+
+.bottom-bear {
+    top: 120px;
+    animation: bounceSoft 3.1s ease-in-out infinite;
+}
+
+.bottom-bear .stack-head,
+.bottom-bear .stack-body {
+    background: #dac3b1;
+}
+
+.try-again-btn {
+    margin-top: 6px;
+    width: 200px;
+    height: 58px;
+    border: 0;
+    border-radius: 999px;
+    background: linear-gradient(180deg, #de4a6f, #b4284c);
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.7rem;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    cursor: pointer;
+    box-shadow: 0 12px 20px rgba(160, 28, 67, 0.3);
+    animation: pulseButton 1.5s ease-in-out infinite;
+}
+
+.try-again-btn:hover {
+    transform: translateY(-2px) scale(1.03);
 }
 
 @keyframes pulse {
     0%, 100% { transform: scale(1); }
     50% { transform: scale(1.05); }
+}
+
+@keyframes cardEnter {
+    from { opacity: 0; transform: translateY(18px) scale(0.96); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes titlePop {
+    from { opacity: 0; transform: translateY(12px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes titleSlideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px) translateX(-18px) scale(0.96);
+        letter-spacing: 2px;
+        filter: blur(2px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) translateX(0) scale(1);
+        letter-spacing: 0.4px;
+        filter: blur(0);
+    }
+}
+
+@keyframes charReveal {
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes titleDrift {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(8px); }
+    75% { transform: translateX(-8px); }
+}
+
+@keyframes titleWave {
+    0%, 100% { transform: rotate(-5deg) translateX(0); }
+    50% { transform: rotate(-5deg) translateX(7px); }
+}
+
+@keyframes floatSoft {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+@keyframes heartFloat {
+    0%, 100% { transform: translateY(0) scale(0.9); opacity: 0.62; }
+    50% { transform: translateY(-10px) scale(1.08); opacity: 1; }
+}
+
+@keyframes wiggleTiny {
+    0%, 100% { transform: translateX(-50%) rotate(0deg); }
+    50% { transform: translateX(-50%) rotate(3deg); }
+}
+
+@keyframes bounceSoft {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-6px); }
+}
+
+@keyframes pulseButton {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.03); }
 }
 
 /* ===== STEP 2: LETTER ===== */
@@ -152,11 +558,149 @@ body {
     background-color: #c73049;
 }
 
+/* ===== STEP 4: BIRTHDAY WISH MESSAGE ===== */
+.wish-message-card {
+    width: min(90vw, 680px);
+    max-height: 85vh;
+    border-radius: 32px;
+    background: rgba(255, 255, 255, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.88);
+    box-shadow: 0 30px 68px rgba(124, 45, 74, 0.26);
+    backdrop-filter: blur(6px);
+    text-align: center;
+    padding: 32px 22px;
+    overflow-y: auto;
+    animation: cardEnter 0.8s cubic-bezier(.2, .7, .2, 1);
+    position: relative;
+}
+
+.wish-title {
+    font-size: clamp(2rem, 8vw, 2.8rem);
+    color: #a41e3e;
+    font-weight: 900;
+    letter-spacing: 2px;
+    margin: 0 0 16px;
+    text-shadow: 0 3px 0 rgba(255, 255, 255, 0.8);
+}
+
+.wish-decoratives {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    margin: 12px 0 16px;
+    height: 50px;
+    perspective: 1000px;
+}
+
+.decor-item {
+    font-size: 2.2rem;
+    opacity: 0.75;
+    animation: decorFloat 3.5s ease-in-out infinite;
+}
+
+.decor-camera {
+    animation-delay: 0s;
+    align-self: flex-start;
+}
+
+.decor-hearts-top {
+    animation-delay: 0.4s;
+    align-self: center;
+}
+
+.decor-cherries {
+    animation-delay: 0.8s;
+    align-self: flex-end;
+}
+
+.wish-text-container {
+    margin: 14px 0 20px;
+}
+
+.wish-text {
+    font-size: clamp(0.95rem, 3.5vw, 1.1rem);
+    line-height: 1.8;
+    color: #5a3a4a;
+    text-align: left;
+    max-width: 100%;
+    font-weight: 400;
+}
+
+.wish-decoratives-bottom {
+    display: flex;
+    justify-content: center;
+    gap: 120px;
+    margin: 18px 0 20px;
+    height: 50px;
+}
+
+.decor-hearts-bottom {
+    font-size: 2.2rem;
+    opacity: 0.7;
+    animation: decorFloat 3.2s ease-in-out infinite 0.6s;
+}
+
+.decor-spiral {
+    font-size: 2rem;
+    opacity: 0.65;
+    animation: spiralSpin 4s linear infinite;
+}
+
+.final-btn {
+    width: 160px;
+    height: 50px;
+    border: 0;
+    border-radius: 999px;
+    background: linear-gradient(180deg, #e94560, #d11f42);
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    cursor: pointer;
+    box-shadow: 0 12px 20px rgba(170, 28, 64, 0.3);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.final-btn:hover {
+    transform: translateY(-2px) scale(1.03);
+}
+
+@keyframes decorFloat {
+    0%, 100% { transform: translateY(0) rotateZ(0deg); opacity: 0.75; }
+    50% { transform: translateY(-12px) rotateZ(5deg); opacity: 0.95; }
+}
+
+@keyframes spiralSpin {
+    from { transform: rotateZ(0deg); }
+    to { transform: rotateZ(360deg); }
+}
+
 /* ===== STEP 3: FINAL CARD ===== */
 .final-card-container {
     animation: fadeIn 1s ease-in-out;
     max-width: 90%;
     text-align: center;
+}
+
+.next-wish-btn {
+    width: 140px;
+    height: 46px;
+    margin-top: 18px;
+    border: 0;
+    border-radius: 999px;
+    background: linear-gradient(180deg, #e94560, #d11f42);
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 11px 18px rgba(170, 28, 64, 0.28);
+    transition: transform 0.25s ease;
+}
+
+.next-wish-btn:hover {
+    transform: translateY(-2px) scale(1.03);
 }
 
 .greeting {
@@ -242,6 +786,165 @@ body {
 
 /* RESPONSIVE DESIGN */
 @media (max-width: 600px) {
+    .wish-message-card {
+        width: 94vw;
+        max-height: 80vh;
+        padding: 22px 14px;
+    }
+
+    .wish-title {
+        font-size: 1.8rem;
+        letter-spacing: 1px;
+        margin-bottom: 10px;
+    }
+
+    .wish-decoratives {
+        margin: 8px 0 10px;
+        height: 45px;
+    }
+
+    .decor-item {
+        font-size: 1.8rem;
+    }
+
+    .wish-text {
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+
+    .wish-decoratives-bottom {
+        gap: 80px;
+        margin: 12px 0 16px;
+        height: 45px;
+    }
+
+    .final-btn {
+        width: 140px;
+        height: 46px;
+        font-size: 1.1rem;
+    }
+
+    .next-wish-btn {
+        width: 130px;
+        height: 44px;
+        font-size: 1.1rem;
+    }
+
+    .bday-card {
+        width: 94vw;
+        min-height: 520px;
+        padding: 26px 16px 24px;
+    }
+
+    .bday-title {
+        margin-bottom: 8px;
+        letter-spacing: 1px;
+    }
+
+    .bday-name-deepu {
+        font-size: 1.8rem;
+        letter-spacing: 1px;
+        margin-top: 2px;
+    }
+
+    .bday-container {
+        width: 240px;
+        height: 240px;
+        margin: 14px auto 12px;
+    }
+
+    .bday-wish {
+        font-size: 1rem;
+        margin: 10px 0 18px;
+    }
+
+    .continue-btn {
+        width: 160px;
+        height: 48px;
+        font-size: 1.3rem;
+    }
+
+    .intro-card {
+        width: 94vw;
+        min-height: 530px;
+        padding: 28px 18px 20px;
+    }
+
+    .intro-characters {
+        gap: 20px;
+        height: 205px;
+    }
+
+    .intro-gif {
+        width: 132px;
+        max-width: 42vw;
+    }
+
+    .character {
+        width: 122px;
+    }
+
+    .character-head {
+        width: 92px;
+        height: 84px;
+    }
+
+    .character-body {
+        width: 100px;
+        height: 72px;
+    }
+
+    .choice-row {
+        height: 76px;
+        max-width: 300px;
+    }
+
+    .choice-btn {
+        width: 112px;
+        height: 50px;
+        font-size: 1.7rem;
+    }
+
+    .no-btn {
+        left: 176px;
+    }
+
+    .no-page-card {
+        min-height: 470px;
+        padding: 26px 14px 22px;
+    }
+
+    .no-page-characters {
+        width: 200px;
+        height: 220px;
+        margin-top: 10px;
+    }
+
+    .no-page-gif {
+        width: 188px;
+        height: 188px;
+    }
+
+    .stack-head {
+        width: 102px;
+        height: 88px;
+    }
+
+    .stack-body {
+        width: 114px;
+        height: 72px;
+    }
+
+    .bottom-bear {
+        top: 105px;
+    }
+
+    .try-again-btn {
+        width: 180px;
+        height: 52px;
+        font-size: 1.4rem;
+    }
+
     .name { font-size: 3rem; }
     .wish-message { font-size: 1rem; }
     .cake { transform: scale(0.8); }
