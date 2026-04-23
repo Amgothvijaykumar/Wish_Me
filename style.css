@@ -824,6 +824,95 @@ body {
     to { opacity: 1; }
 }
 
+/* ===== STEP LOVE: LOVE FRAME ===== */
+.love-frame-card {
+    width: min(90vw, 800px);
+    min-height: 580px;
+    border-radius: 32px;
+    background: rgba(255, 255, 255, 0.68);
+    border: 2px solid rgba(233, 69, 96, 0.35);
+    box-shadow: 0 30px 80px rgba(124, 45, 74, 0.28), inset 0 0 60px rgba(247, 194, 209, 0.2);
+    backdrop-filter: blur(6px);
+    text-align: center;
+    padding: 36px 28px 32px;
+    animation: cardEnter 0.9s cubic-bezier(.2, .7, .2, 1);
+}
+
+.love-frame-title {
+    font-size: clamp(2.2rem, 7vw, 3.2rem);
+    color: #a41e3e;
+    font-weight: 900;
+    letter-spacing: 2px;
+    margin: 0 0 24px;
+    text-shadow: 0 4px 0 rgba(255, 255, 255, 0.8);
+    animation: titleSlideIn 0.75s ease-out;
+}
+
+.love-frame-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 24px;
+}
+
+.love-frame {
+    width: min(360px, 80vw);
+    aspect-ratio: 0.85 / 1;
+    border-radius: 32px;
+    overflow: hidden;
+    border: 20px solid #fff;
+    box-shadow:
+        0 0 0 3px #e94560,
+        0 0 0 8px #fff,
+        0 0 0 11px #d73c63,
+        0 32px 60px rgba(170, 28, 64, 0.32);
+    background: linear-gradient(135deg, rgba(233, 69, 96, 0.1), rgba(217, 60, 99, 0.08));
+    animation: loveFramePop 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.love-frame-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.love-frame-caption {
+    font-size: clamp(1rem, 3.5vw, 1.35rem);
+    color: #6a2340;
+    max-width: 620px;
+    margin: 0 auto 20px;
+    line-height: 1.8;
+    letter-spacing: 0.6px;
+    font-weight: 600;
+    font-style: italic;
+}
+
+.love-close-btn {
+    width: 160px;
+    height: 50px;
+    border: 0;
+    border-radius: 999px;
+    background: linear-gradient(180deg, #e94560, #d11f42);
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 14px 24px rgba(170, 28, 64, 0.35);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.love-close-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 18px 32px rgba(170, 28, 64, 0.42);
+}
+
+@keyframes loveFramePop {
+    0% { opacity: 0; transform: scale(0.82) rotate(-5deg); filter: blur(4px); }
+    100% { opacity: 1; transform: scale(1) rotate(0deg); filter: blur(0); }
+}
+
 /* ===== STEP 4: BIRTHDAY WISH MESSAGE ===== */
 .wish-message-card {
     width: min(90vw, 680px);
@@ -1119,6 +1208,39 @@ body {
     }
 
     .frame-btn {
+        width: 140px;
+        height: 46px;
+        font-size: 1.1rem;
+    }
+
+    .love-frame-card {
+        width: 94vw;
+        min-height: 560px;
+        padding: 26px 16px 24px;
+    }
+
+    .love-frame-title {
+        font-size: 1.8rem;
+        letter-spacing: 1px;
+        margin-bottom: 16px;
+    }
+
+    .love-frame {
+        width: min(240px, 76vw);
+        box-shadow:
+            0 0 0 3px #e94560,
+            0 0 0 6px #fff,
+            0 0 0 8px #d73c63,
+            0 20px 40px rgba(170, 28, 64, 0.28);
+    }
+
+    .love-frame-caption {
+        font-size: 1rem;
+        margin-bottom: 18px;
+        line-height: 1.6;
+    }
+
+    .love-close-btn {
         width: 140px;
         height: 46px;
         font-size: 1.1rem;

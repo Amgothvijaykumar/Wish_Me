@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const step3 = document.getElementById('step3');
     const step4 = document.getElementById('step4');
     const stepFrame = document.getElementById('stepFrame');
+    const stepLove = document.getElementById('stepLove');
     const choiceRow = document.getElementById('choiceRow');
     const yesButton = document.getElementById('yes-button');
     const noButton = document.getElementById('no-button');
@@ -17,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const nextWishButton = document.getElementById('next-wish-button');
     const finalCloseButton = document.getElementById('final-close-button');
     const frameCloseButton = document.getElementById('frame-close-button');
+    const loveCloseButton = document.getElementById('love-close-button');
     const greetingTextElement = document.getElementById('greetingText');
 
     function animateHeadingText(element, baseDelay = 0) {
@@ -113,6 +115,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     frameCloseButton.addEventListener('click', () => {
         stepFrame.classList.remove('active');
+        stepLove.classList.add('active');
+    });
+
+    loveCloseButton.addEventListener('click', () => {
+        stepLove.classList.remove('active');
         step1.classList.add('active');
         resetIntroButtons();
         animateHeadingText(introTitle, 0.08);
