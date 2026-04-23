@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const musicPopup = document.getElementById('music-popup');
     let musicStarted = false;
     let popupTimer;
+    const unlockEvents = ['touchstart', 'pointerdown', 'click', 'keydown'];
 
     function showMusicPopup(message) {
         if (!musicPopup) {
@@ -42,31 +43,47 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 20000);
     }
 
+    function detachMusicUnlockListeners() {
+        for (const eventName of unlockEvents) {
+            document.removeEventListener(eventName, tryStartMusic);
+        }
+    }
+
     function tryStartMusic() {
         if (!bgMusic || musicStarted) {
             return;
         }
 
+        bgMusic.muted = false;
         bgMusic.volume = 0.65;
+        bgMusic.load();
 
         const playAttempt = bgMusic.play();
         if (playAttempt && typeof playAttempt.then === 'function') {
             playAttempt
                 .then(() => {
                     musicStarted = true;
+                    detachMusicUnlockListeners();
                     showMusicPopup('Now playing: pretty_lover.mp3');
                 })
                 .catch(() => {
                     showMusicPopup('Please tap once to allow music: pretty_lover.mp3');
                 });
+            return;
+        }
+
+        // Fallback for older browsers that do not return a Promise from play().
+        musicStarted = !bgMusic.paused;
+        if (musicStarted) {
+            detachMusicUnlockListeners();
+            showMusicPopup('Now playing: pretty_lover.mp3');
         }
     }
 
-    // Keep trying on user gestures until music starts (mobile browsers can reject the first attempt).
-    document.addEventListener('pointerdown', tryStartMusic, { passive: true });
-    document.addEventListener('touchend', tryStartMusic, { passive: true });
-    document.addEventListener('click', tryStartMusic);
-    document.addEventListener('keydown', tryStartMusic);
+    // Keep trying on user gestures until music starts (mobile browsers can reject autoplay).
+    for (const eventName of unlockEvents) {
+        document.addEventListener(eventName, tryStartMusic, { passive: true });
+    }
 
     function animateHeadingText(element, baseDelay = 0) {
         if (!element) {
