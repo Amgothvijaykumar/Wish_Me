@@ -857,17 +857,15 @@ body {
 
 .love-frame {
     width: min(360px, 80vw);
-    aspect-ratio: 0.85 / 1;
-    border-radius: 32px;
+    aspect-ratio: 1 / 1;
+    border-radius: 28px;
     overflow: hidden;
-    border: 20px solid #fff;
+    border: 10px solid rgba(255, 255, 255, 0.9);
     box-shadow:
-        0 0 0 3px #e94560,
-        0 0 0 8px #fff,
-        0 0 0 11px #d73c63,
-        0 32px 60px rgba(170, 28, 64, 0.32);
-    background: linear-gradient(135deg, rgba(233, 69, 96, 0.1), rgba(217, 60, 99, 0.08));
+        0 18px 40px rgba(124, 45, 74, 0.18);
+    background: radial-gradient(circle at 30% 30%, rgba(247, 194, 209, 0.15), rgba(233, 69, 96, 0.08));
     animation: loveFramePop 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    position: relative;
 }
 
 .love-frame-photo {
@@ -875,6 +873,8 @@ body {
     height: 100%;
     object-fit: cover;
     display: block;
+    border-radius: 22px;
+    transform: scale(1.2);
 }
 
 .love-frame-caption {
@@ -1227,11 +1227,9 @@ body {
 
     .love-frame {
         width: min(240px, 76vw);
-        box-shadow:
-            0 0 0 3px #e94560,
-            0 0 0 6px #fff,
-            0 0 0 8px #d73c63,
-            0 20px 40px rgba(170, 28, 64, 0.28);
+        border-radius: 24px;
+        border-width: 7px;
+        box-shadow: 0 14px 28px rgba(124, 45, 74, 0.16);
     }
 
     .love-frame-caption {
