@@ -20,6 +20,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const frameCloseButton = document.getElementById('frame-close-button');
     const loveCloseButton = document.getElementById('love-close-button');
     const greetingTextElement = document.getElementById('greetingText');
+    const bgMusic = document.getElementById('bg-music');
+    const musicPermissionNote = document.getElementById('music-permission-note');
+    let musicStarted = false;
+
+    function tryStartMusic() {
+        if (!bgMusic || musicStarted) {
+            return;
+        }
+
+        bgMusic.volume = 0.65;
+
+        const playAttempt = bgMusic.play();
+        if (playAttempt && typeof playAttempt.then === 'function') {
+            playAttempt
+                .then(() => {
+                    musicStarted = true;
+                    if (musicPermissionNote) {
+                        musicPermissionNote.textContent = 'Now playing: pretty_lover.mp3';
+                    }
+                })
+                .catch(() => {
+                    if (musicPermissionNote) {
+                        musicPermissionNote.textContent = 'Please tap once to allow music: pretty_lover.mp3';
+                    }
+                });
+        }
+    }
+
+    document.addEventListener('pointerdown', tryStartMusic, { once: true });
+    document.addEventListener('keydown', tryStartMusic, { once: true });
 
     function animateHeadingText(element, baseDelay = 0) {
         if (!element) {
